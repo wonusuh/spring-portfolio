@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.suh.mapper.UnitConverterMapper">
+
+	<select id="getList" resultType="org.suh.domain.UnitConverterVO">
+	<![CDATA[
+		SELECT * FROM newtable where bno > 0
+	]]>
+	</select>
+
+	<insert id="insert">
+		insert into newtable (fromunit, expression, tounit)
+		values (#{fromunit}, #{expression}, #{tounit})
+	</insert>
+
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="int">
+			SELECT auto_increment
+			FROM information_schema.TABLES
+			WHERE
+			TABLE_SCHEMA
+			= "test"
+			AND TABLE_NAME ="newtable"
+		</selectKey>
+		INSERT INTO newtable
+		(bno, fromunit, expression, tounit)
+		VALUES(#{bno},
+		#{fromunit}, #{expression}, #{tounit})
+	</insert>
+
+	<select id="read" resultType="org.suh.domain.UnitConverterVO">
+		select * from newtable where bno =
+		#{bno}
+	</select>
+
+	<delete id="delete">
+		delete from newtable where bno = #{bno}
+	</delete>
+
+</mapper>
